@@ -112,5 +112,5 @@ func main() {
 		log.Fatalf("Failed to publish the message: %v", err)
 	}
 
-	log.Println("Message sent")
+	log.Println("Message sent: %s", message.Subject)
 }
