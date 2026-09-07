@@ -62,11 +62,12 @@ func main() {
 	//log.Printf("%s %s %s %s %s %s", username, password, host, port, vhost, topic)
 	//log.Printf("%s %s %s", from, subject, body)
 
-	connString := fmt.Sprintf("amqp://%s:%s@%s:%s//%s", username, password, host, port, vhost)
+	connString := fmt.Sprintf("amqp://%s:%s@%s:%s/%s", username, password, host, port, vhost)
 	conn, err := amqp.Dial(connString)
 	if err != nil {
 		log.Fatalf("Failed to connect to RabbitMQ: %v", err)
 	}
+	defer conn.Close()
 
 	channel, err := conn.Channel()
 	if err != nil {
@@ -112,5 +113,5 @@ func main() {
 		log.Fatalf("Failed to publish the message: %v", err)
 	}
 
-	log.Println("Message sent: %s", message.Subject)
+	log.Printf("Message sent: %s\n", message.Subject)
 }
